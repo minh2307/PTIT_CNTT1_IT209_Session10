@@ -1,0 +1,15 @@
+# Single-stage Dockerfile (chưa tối ưu)
+# Sử dụng base image đầy đủ (Debian based), kích thước lớn (~1.5GB)
+FROM node:18
+
+WORKDIR /app
+
+# Không tối ưu layer caching: Copy toàn bộ source code cùng lúc
+COPY . .
+
+# Cài đặt tất cả dependencies (bao gồm cả devDependencies và lưu trữ cache npm)
+RUN npm install
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]
